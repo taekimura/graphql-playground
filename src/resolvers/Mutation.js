@@ -22,3 +22,24 @@ async function signup(parent, args, context) {
     user
   };
 }
+
+async function login(parent, args, context) {
+  const user = await context.prisma.user.findUnique({
+    where: { email: args.email }
+  });
+  if (!user) {
+    throw new Error('そのようなユーザーは存在しません');
+  }
+
+  const valid = await bcrypt.compare(args.password, user.password);
+  if (!valid) {
+    throw new Error('無効なパスワードです');
+  }
+
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+
+  return {
+    token,
+    user
+  };
+}
