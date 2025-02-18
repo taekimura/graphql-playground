@@ -1,4 +1,7 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+APP_SECRET = 'Graphql';
 
 async function signup(parent, args, context) {
   // set up password
@@ -11,4 +14,11 @@ async function signup(parent, args, context) {
       password
     }
   });
+
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+
+  return {
+    token,
+    user
+  };
 }
