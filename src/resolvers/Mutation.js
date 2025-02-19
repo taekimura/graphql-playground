@@ -43,3 +43,13 @@ async function login(parent, args, context) {
     user
   };
 }
+
+async function post(parent, args, context) {
+  return await context.prisma.link.create({
+    data: {
+      url: args.url,
+      description: args.description,
+      postedBy: userId
+    }
+  });
+}
