@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-APP_SECRET = 'Graphql';
+APP_SECRET = 'Graphql-fkdskdfjdkj';
 
 function getTokenPayload(token) {
   return jwt.verify(token, APP_SECRET);
